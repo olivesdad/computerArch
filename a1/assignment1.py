@@ -36,17 +36,20 @@ intMap = {
             'E':14,
             'F':15
             }
-
-#This is the int2hex function it takes a single integer argument and returns the hexadecimal value...
+#########################################################################################################
+# This is the int2hex function it takes a single integer argument and returns the hexadecimal value...  #
+#########################################################################################################
 def int2hex(number):
     hex=''
     while number > 0:
         hex =  hexMap[number%16] + hex
         number = int(number / 16)
     return hex
-    
-# This  is the addHex function. it accepts 2 hexadecimal numbers in the form of a string and returns a hexadecimal value of their sums
-# WARNING: no regex or input checking! will throw key error if not a valid hex value
+
+#########################################################################################################################################
+# This  is the addHex function. it accepts 2 hexadecimal numbers in the form of a string and returns a hexadecimal value of their sums  #
+# WARNING: no regex or input checking! will throw key error if not a valid hex value                                                    #
+#########################################################################################################################################
 def addHex(hex1, hex2):
     #need to know which string is longer
     if len(hex1) > len(hex2):
@@ -82,9 +85,56 @@ def addHex(hex1, hex2):
     return ''.join(hexOut)
 
 
+################################################################################################################################################
+# subtractBin function accepts 2 binary numbers in string format. It will compare the number to determine which is greater                     #
+# Then subtract the smaller number from the larger one and return the binary value as a string                                                 #
+# as with every other function, we dont have any error checking and it will probably break if you pass it something that isnt a binary string  #
+################################################################################################################################################
+def subtractBin(b1, b2):
+    #convert to int to trim leading 0s and determine which is larger
+    b1 = int(b1)
+    b2 = int(b2)
+    solution = []
+    #The larger number wil go to the top also convert to strings and split chars into list
+    if b1 > b2:
+        topB = list(str(b1))
+        bottomB = list(str(b2))
+    elif b2 > b1:
+        topB = list(str(b2))
+        bottomB = list(str(b1))
+    else:
+        #if they are the same we can just return 0
+        return '0'
+    #pad bottom number
+    while len(bottomB) < len(topB):
+        bottomB.insert(0,'0')
+
+    #subtract all the things
+    i=len(bottomB) - 1
+    while i >= 0:
+        solution.insert(0, int(topB[i]) - int(bottomB[i]))
+        i -= 1 
+
+    #deal with borrowing
+    i=len(solution) - 1
+    while i >= 0:
+        if solution[i] < 0:
+            #borrow one from the left
+            solution[i-1] = solution[i-1] - 1
+            #add 2 to elimnate the negative
+            solution[i] = solution[i] + 2 
+        i-=1
+
+    return ''.join(str (n) for n in solution)
+    #arrange longest string on top
+
+
+
 
 if __name__ == "__main__":
    print(int2hex(177))
 
    print(addHex('fff', 'fff'))
+
+   print(subtractBin('00000101', '10001'))
 
