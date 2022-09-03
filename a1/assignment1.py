@@ -37,6 +37,7 @@ intMap = {
             'F':15
             }
 
+#This is the int2hex function it takes a single integer argument and returns the hexadecimal value...
 def int2hex(number):
     hex=''
     while number > 0:
